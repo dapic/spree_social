@@ -1,0 +1,26 @@
+---
+zh-CN:
+  devise:
+    omniauth_callbacks:
+      success: "您已成功使用%{kind}账户登录"
+  spree:
+    user_was_not_valid: User was not valid.
+    add_another_service: "Add another service to sign in with:"
+    authentications:
+      destroy: 'Successfully destroyed authentication method.'
+    back_to_authentication_methods_list: "Back To Authentication Methods List"
+    edit_social_method: "编辑联合登录方式"
+    new_social_method: "新的登录方式"
+    no_authentication_methods_found: "未找到任何登录方式"
+    one_more_step: '用%{}登录，还需完成最后一个小步骤'
+    remove_authentication_option_confirmation: "您确定要删除此登录方式？"
+    sign_into_account: "您可以用下列账户之一登录"
+    sign_in_through_one_of_these_services: "用其它账户登录"
+    social_api_key: "API Key"
+    social_api_secret: "API Secret"
+    social_authentication_methods: "Social Authentication Methods"
+    social_authentication_methods_description: "Setup OAuth Authentication Methods"
+    social_provider: "登录账户提供方"
+    please_confirm_your_email: "请确认邮箱地址"
+    sign_in_with: "用%{provider}账户登录"
+    you_have_signed_in_with_these_services: "您曾通过下列账户登录"
