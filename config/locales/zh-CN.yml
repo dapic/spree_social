@@ -4,11 +4,11 @@ zh-CN:
     omniauth_callbacks:
       success: "您已成功使用%{kind}账户登录"
   spree:
-    user_was_not_valid: User was not valid.
-    add_another_service: "Add another service to sign in with:"
+    user_was_not_valid: "此用户无效"
+    add_another_service: "增加登录方式"
     authentications:
-      destroy: 'Successfully destroyed authentication method.'
-    back_to_authentication_methods_list: "Back To Authentication Methods List"
+      destroy: '成功地去除了该联合登录方式'
+    back_to_authentication_methods_list: "回到联合登录方式列表"
     edit_social_method: "编辑联合登录方式"
     new_social_method: "新的登录方式"
     no_authentication_methods_found: "未找到任何登录方式"
@@ -18,8 +18,8 @@ zh-CN:
     sign_in_through_one_of_these_services: "用其它账户登录"
     social_api_key: "API Key"
     social_api_secret: "API Secret"
-    social_authentication_methods: "Social Authentication Methods"
-    social_authentication_methods_description: "Setup OAuth Authentication Methods"
+    social_authentication_methods: "联合登录方式列表"
+    social_authentication_methods_description: "设置联合登录方式"
     social_provider: "登录账户提供方"
     please_confirm_your_email: "请确认邮箱地址"
     sign_in_with: "用%{provider}账户登录"
