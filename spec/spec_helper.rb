@@ -20,6 +20,13 @@ require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/capybara_ext'
 
+SpreeSocial::OAUTH_PROVIDERS += [
+    ["Facebook", "facebook"],
+    ["Twitter", "twitter"],
+    ["Github", "github"],
+    ["Google", "google_oauth2"],
+    ["Amazon", "amazon"]
+]
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.mock_with :rspec

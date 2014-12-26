@@ -35,4 +35,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coffee-rails', '~> 4.0.0'
   s.add_development_dependency 'sass-rails', '~> 4.0.0'
   s.add_development_dependency 'guard-rspec'
+  s.add_development_dependency 'omniauth-twitter'
+  s.add_development_dependency 'omniauth-facebook'
+  s.add_development_dependency 'omniauth-github'
+  s.add_development_dependency 'omniauth-google-oauth2'
+  s.add_development_dependency 'omniauth-amazon'
 end
