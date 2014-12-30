@@ -1,5 +1,11 @@
 module SpreeSocial
-  OAUTH_PROVIDERS = []
+  OAUTH_PROVIDERS = [
+    ["Facebook", "facebook"],
+    ["Twitter", "twitter"],
+    ["Github", "github"],
+    ["Google", "google_oauth2"],
+    ["Amazon", "amazon"]
+  ]
 
   class Engine < Rails::Engine
     engine_name 'spree_social'
