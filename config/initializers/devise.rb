@@ -1,3 +1,9 @@
+SpreeSocial::OAUTH_PROVIDERS << ["Facebook", "facebook"]
+SpreeSocial::OAUTH_PROVIDERS << ["Twitter", "twitter"]
+SpreeSocial::OAUTH_PROVIDERS << ["Github", "github"]
+SpreeSocial::OAUTH_PROVIDERS << ["Google", "google_oauth2"]
+SpreeSocial::OAUTH_PROVIDERS << ["Amazon", "amazon"]
+
 SpreeSocial::OAUTH_PROVIDERS.each do |provider|
   SpreeSocial.init_provider(provider[1])
 end

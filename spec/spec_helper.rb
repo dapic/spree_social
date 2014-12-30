@@ -3,6 +3,12 @@ SimpleCov.start 'rails'
 
 ENV['RAILS_ENV'] ||= 'test'
 
+# the following lines need to be before requiring the "dummy" app files
+require 'omniauth-twitter'
+require 'omniauth-facebook'
+require 'omniauth-github'
+require 'omniauth-google-oauth2'
+require 'omniauth-amazon'
 require File.expand_path('../dummy/config/environment', __FILE__)
 
 require 'rspec/rails'
