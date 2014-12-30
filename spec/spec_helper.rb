@@ -3,6 +3,12 @@ SimpleCov.start 'rails'
 
 ENV['RAILS_ENV'] ||= 'test'
 
+# the following lines need to be before requiring the "dummy" app files
+require 'omniauth-twitter'
+require 'omniauth-facebook'
+require 'omniauth-github'
+require 'omniauth-google-oauth2'
+require 'omniauth-amazon'
 require File.expand_path('../dummy/config/environment', __FILE__)
 
 require 'rspec/rails'
@@ -20,13 +26,7 @@ require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/capybara_ext'
 
-SpreeSocial::OAUTH_PROVIDERS += [
-    ["Facebook", "facebook"],
-    ["Twitter", "twitter"],
-    ["Github", "github"],
-    ["Google", "google_oauth2"],
-    ["Amazon", "amazon"]
-]
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.mock_with :rspec
@@ -51,6 +51,10 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.include FactoryGirl::Syntax::Methods
   config.include Rack::Test::Methods, :type => :requests
+
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, :timeout => 120)
+  end
 
   Capybara.javascript_driver = :poltergeist
 end
