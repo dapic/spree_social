@@ -1,28 +1,26 @@
-SpreeSocial
-===========
+# Spree Social
 
-[![Build Status](https://api.travis-ci.org/spree/spree_social.png)](https://travis-ci.org/spree/spree_social)
-[![Code Climate](https://codeclimate.com/github/spree/spree_social.png)](https://codeclimate.com/github/spree/spree_social)
+[![Build Status](https://travis-ci.org/spree-contrib/spree_social.svg?branch=2-4-stable)](https://travis-ci.org/spree-contrib/spree_social)
+[![Code Climate](https://codeclimate.com/github/spree-contrib/spree_social/badges/gpa.svg)](https://codeclimate.com/github/spree-contrib/spree_social)
 
 Core for all social media related functionality for Spree.
 The Spree Social gem handles authorization, account creation and association through social media sources such as Twitter and Facebook.
-This requires the edge source of [Spree][1].
 This gem is beta at best and should be treated as such.
 Features and code base will change rapidly as this is under active development.
 Use with caution.
 
-Setup for Production
---------------------
+---
+
+## Setup for Production
 
 Add this extension to your `Gemfile`:
 ```ruby
-gem 'spree_social', github: 'spree/spree_social', branch: 'master'
+gem 'spree_social', github: 'spree-contrib/spree_social', branch: '2-4-stable'
 ```
 
 Then run:
 ```sh
-$ bundle update
-$ rails g spree_social:install
+$ bundle && bundle exec rails g spree_social:install
 $ bundle exec rake db:migrate
 ```
 
@@ -34,21 +32,34 @@ Spree::SocialConfig[:path_prefix] = 'profile' # for /profile/auth/:provider
 Spree::SocialConfig[:path_prefix] = '' # for /auth/:provider
 ```
 
-Spree Setup to Utilize OAuth Sources
-------------------------------------
+---
+
+## Spree Setup to Utilize OAuth Sources
 
 Login as an admin user and navigate to Configuration > Social Authentication Methods
 
-Click on the New Authentication Method button to enter the key obtained from their respective source
-(See below for instructions on setting up the various providers)
+Click on the New Authentication Method button to enter the key obtained from their respective source, (See below for instructions on setting up the various providers).
 
 Multiple key entries can now be entered based on the rails environment. This allows for portability and the lack of need to check in your key to your repository. You also have the ability to enable and disable sources. These setting will be reflected on the client UI as well.
 
-**You MUST restart your application after configuring or
-updating an authentication method.**
+Alternatively you can ship keys as environment variables and create these Authentication Method records on application boot via an initializer. Below is an example for facebook.
 
-Setup the Applications at the Respective Sources
-------------------------------------------------
+```ruby
+# Ensure our environment is bootstrapped with a facebook connect app
+if ActiveRecord::Base.connection.table_exists? 'spree_authentication_methods'
+  Spree::AuthenticationMethod.where(environment: Rails.env, provider: 'facebook').first_or_create do |auth_method|
+    auth_method.api_key = ENV['FACEBOOK_APP_ID']
+    auth_method.api_secret = ENV['FACEBOOK_APP_SECRET']
+    auth_method.active = true
+  end
+end
+```
+
+**You MUST restart your application after configuring or updating an authentication method.**
+
+---
+
+## Setup the Applications at the Respective Sources
 
 OAuth Applications @ Facebook, Twitter and / or Github are supported out of the box but you will need to setup applications are each respective site as follows for public use and for development.
 
@@ -101,34 +112,26 @@ OAuth Applications @ Facebook, Twitter and / or Github are supported out of the 
 
 * Google (OAuth)
 
+## Adding other OAuth sources
+
+It is easy to add any OAuth source, given there is an OmniAuth strategy gem for it (and if not, you can easily [write one by yourself](https://github.com/intridea/omniauth/wiki/Strategy-Contribution-Guide). For instance, if you want to add authorization via LinkedIn, the steps will be:
+
+1. Add `gem "omniauth-linkedin"` to your Gemfile, run `bundle install`.
+2. In an initializer file, e.g. `config/initializers/devise.rb`, add and init a new provider for SpreeSocial:
+
+        SpreeSocial::OAUTH_PROVIDERS << ['LinkedIn', 'linkedin']
+        SpreeSocial.init_provider('linkedin')
+
+3. Activate your provider as usual (via initializer or admin interface).
+4. Override `spree/users/social` view to render OAuth links in preferred way for a new one to be displayed. Or alternatively, include to your CSS a definition for `.icon-spree-linkedin-circled` and an embedded icon font for LinkedIn from [fontello.com](http://fontello.com/) (the way existing icons for Facebook, Twitter, etc are implemented). You can also override CSS classes for other providers, `.icon-spree-<provider>-circled`, to use different font icons or classic background images, without having to override views.
+
 ---
 
 ## Contributing
 
-In the spirit of [free software][5], **everyone** is encouraged to help improve this project.
+See corresponding [guidelines][11].
 
-Here are some ways *you* can contribute:
-
-* by using prerelease versions
-* by reporting [bugs][6]
-* by suggesting new features
-* by writing translations
-* by writing or editing documentation
-* by writing specifications
-* by writing code (*no patch is too small*: fix typos, add comments, clean up inconsistent whitespace)
-* by refactoring code
-* by resolving [issues][6]
-* by reviewing patches
-
-Starting point:
-
-* Fork the repo
-* Clone your repo
-* Run `bundle install`
-* Run `bundle exec rake test_app` to create the test application in `spec/test_app`
-* Make your changes
-* Ensure specs pass by running `bundle exec rspec spec`
-* Submit your pull request
+---
 
 Copyright (c) 2014 [John Dyer][7] and [contributors][8], released under the [New BSD License][9]
 
@@ -137,8 +140,9 @@ Copyright (c) 2014 [John Dyer][7] and [contributors][8], released under the [New
 [3]: https://apps.twitter.com/app/new
 [4]: https://github.com/settings/applications/new
 [5]: http://www.fsf.org/licensing/essays/free-sw.html
-[6]: https://github.com/spree/spree_social/issues
+[6]: https://github.com/spree-contrib/spree_social/issues
 [7]: https://github.com/LBRapid
-[8]: https://github.com/spree/spree_social/graphs/contributors
-[9]: https://github.com/spree/spree_social/blob/master/LICENSE.md
+[8]: https://github.com/spree-contrib/spree_social/graphs/contributors
+[9]: https://github.com/spree-contrib/spree_social/blob/master/LICENSE.md
 [10]: https://login.amazon.com/manageApps
+[11]: https://github.com/spree-contrib/spree_social/blob/master/CONTRIBUTING.md

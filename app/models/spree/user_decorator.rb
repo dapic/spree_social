@@ -1,5 +1,5 @@
 Spree.user_class.class_eval do
-  has_many :user_authentications, :dependent => :destroy
+  has_many :user_authentications, dependent: :destroy
 
   devise :omniauthable
 
@@ -16,7 +16,7 @@ Spree.user_class.class_eval do
         self.email = omniauth['info']['email'] if omniauth['info']['email'].present?
       end
     end
-    user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    user_authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
   end
 
   def password_required?
