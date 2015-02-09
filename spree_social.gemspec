@@ -21,7 +21,9 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_runtime_dependency 'spree_core', '~> 2.4.0'
+  spree_version = '2-4-stable'
+  #s.add_runtime_dependency 'spree_core', spree_version
+#  s.add_runtime_dependency 'spree_auth_devise', spree_version
   s.add_runtime_dependency 'omniauth'
   s.add_runtime_dependency 'oa-core'
   s.add_runtime_dependency 'omniauth-twitter'
