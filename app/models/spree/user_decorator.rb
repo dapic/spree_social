@@ -10,7 +10,11 @@ Spree.user_class.class_eval do
     user_authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
   end
 
+  # this method DIRECTLY REPLACES the method in spree_auth_devise's "user" model file
+  # there is another one defined in "validable.rb" (a devise module) and that is a "super" of this one
+  # TODO: not sure how this behaves when resetting passwords
   def password_required?
-    (user_authentications.empty? || !password.blank?) && super
+    return false if ( !user_authentications.empty? || awaiting_phone_verification? )
+    super
   end
 end
