@@ -15,7 +15,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             redirect_back_or_default(root_url)
             return
           end
-
+binding.pry
           authentication = Spree::UserAuthentication.find_by_provider_and_uid(auth_hash['provider'], auth_hash['uid'])
 
           if authentication.present? and authentication.try(:user).present?
@@ -27,7 +27,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             flash[:notice] = I18n.t('devise.sessions.signed_in')
             redirect_back_or_default(account_url)
           else
-            user = Spree::User.find_by_email(auth_hash['info']['email']) || Spree::User.new
+            user = Spree::User.new
             user.apply_omniauth(auth_hash)
             if user.save
               flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: auth_hash['provider'])
