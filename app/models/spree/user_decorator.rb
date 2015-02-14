@@ -8,7 +8,7 @@ Spree.user_class.class_eval do
       self.email = omniauth['info']['email'] if email.blank?
     end
     user_authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
-    self.login = omniauth['info']['nickname']
+    self.login ||= omniauth['info']['nickname']
   end
 
   # this method DIRECTLY REPLACES the method in spree_auth_devise's "user" model file
