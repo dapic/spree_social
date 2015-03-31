@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://ruby.taobao.org'
 
 spree_version = '3-0-stable'
 gem 'spree', github: 'spree/spree', branch: spree_version
