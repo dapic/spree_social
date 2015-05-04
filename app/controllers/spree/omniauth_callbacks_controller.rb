@@ -15,22 +15,39 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
 
           authentication = Spree::UserAuthentication.find_by_provider_and_uid(auth_hash['provider'], auth_hash['uid'])
-
+puts "authhash: #\{auth_hash\}"
+puts "-->#\{__LINE__\}"
           if authentication.present? and authentication.try(:user).present?
+puts "-->#\{__LINE__\}"
+            user_login = authentication.user.user_logins.find_or_create_by(login_type: 3, login: "#\{auth_hash['uid']}@#\{auth_hash['provider']\}")
+puts "-->#\{__LINE__\} #\{user_login.inspect\}"
+            user_login.register
+puts "-->#\{__LINE__\} #\{user_login.changed?\}"
             flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: auth_hash['provider'])
             sign_in_and_redirect :spree_user, authentication.user
           elsif spree_current_user
+puts "-->#\{__LINE__\}"
             spree_current_user.apply_omniauth(auth_hash)
             spree_current_user.save!
+            user_login = spree_current_user.user_logins.find_or_create_by(login_type: 3, login: "#\{auth_hash['uid']}@#\{auth_hash['provider']\}")
+puts "-->#\{__LINE__\} #\{user_login.inspect\}"
+            user_login.register
             flash[:notice] = I18n.t('devise.sessions.signed_in')
             redirect_back_or_default(account_url)
           else
-            user = Spree::User.find_by_email(auth_hash['info']['email']) || Spree::User.new
+puts "-->#\{__LINE__\}"
+            user = ( Spree::User.find_by_email(auth_hash['info']['email']) if auth_hash['info']['email'] ) || Spree::User.new
             user.apply_omniauth(auth_hash)
             if user.save
+puts "-->#\{__LINE__\}"
+              user_login = user.user_logins.create(login_type: 3, login: "#\{auth_hash['uid']}@#\{auth_hash['provider']\}")
+puts "-->#\{__LINE__\} #\{user_login.inspect\}"
+              user_login.register
               flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: auth_hash['provider'])
               sign_in_and_redirect :spree_user, user
             else
+puts "-->#\{__LINE__\}"
+              puts "could ot save user #\{user.errors\}"
               session[:omniauth] = auth_hash.except('extra')
               flash[:notice] = Spree.t(:one_more_step, kind: auth_hash['provider'].capitalize)
               redirect_to new_spree_user_registration_url
@@ -38,7 +55,9 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             end
           end
 
+puts "-->#\{__LINE__\}"
           if current_order
+puts "-->#\{__LINE__\}"
             user = spree_current_user || authentication.user
             current_order.associate_user!(user)
             session[:guest_token] = nil
