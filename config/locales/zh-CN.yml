@@ -3,6 +3,8 @@ zh-CN:
   devise:
     omniauth_callbacks:
       success: "您已成功使用%{kind}账户登录"
+      spree_user:
+        failure: "联合登录失败"
   spree:
     user_was_not_valid: "此用户无效"
     add_another_service: "增加登录方式"
