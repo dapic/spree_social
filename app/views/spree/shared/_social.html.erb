@@ -1,12 +1,17 @@
+<div class="clearfix"></div>
+<div class="row section-content-sgcb social-section">
 <div id="social-signin-links">
   <% if (!spree_current_user || !spree_current_user.user_authentications) && Spree::AuthenticationMethod.active_authentication_methods? %>
-    <h4><%= Spree.t(:sign_in_through_one_of_these_services) %></h4>
+      <div class="col-md-6 col-xs-12" style="padding-top: 10px"><%= Spree.t(:sign_in_through_one_of_these_services) %></div>
   <% end %>
 
   <% Spree::AuthenticationMethod.available_for(@spree_user).each do |method| %>
-    <%= link_to(content_tag(:i, '', class: "icon-spree-#{method.provider.to_url}-circled"),
-          spree.spree_user_omniauth_authorize_url(provider: method.provider),
-          id: method.provider.to_url,
-          title: Spree.t(:sign_in_with, provider: method.provider)) if method.active %>
+      <div class="col-md-2 col-xs-3" style="font-size:32px;">
+        <%= link_to(content_tag(:i, '', class: "icon-#{method.provider.to_url}"),
+                    spree.spree_user_omniauth_authorize_url(provider: method.provider),
+                    id: method.provider.to_url,
+                    title: Spree.t(:sign_in_with, provider: method.provider)) if method.active %>
+      </div>
   <% end %>
+</div>
 </div>
