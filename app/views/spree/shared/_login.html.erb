@@ -1,7 +1,7 @@
 <%= form_for Spree::User.new, :as => :spree_user, :url => spree.create_new_session_path do |f| %>
     <div id="password-credentials" class="no-radius">
       <div class="form-group">
-       作为一个已有账户登录
+        会员登录
       </div>
       <div class="form-group">
         <%= f.text_field :login, :class => 'form-control', :tabindex => 1, :placeholder => '登录', autofocus: true %>
@@ -9,11 +9,22 @@
       <div class="form-group">
         <%= f.password_field :password, :class => 'form-control', :tabindex => 2, :placeholder => '密码' %>
       </div>
-    </div>
-    <div class="form-group">
-      <%= f.check_box :remember_me, :tabindex => 3 %>
-      <%= f.label :remember_me, Spree.t(:remember_me) %>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6 col-sm-6" style="padding-left: 0"><%= f.check_box :remember_me, :tabindex => 3 %>
+            <%= f.label :remember_me, Spree.t(:remember_me) %></div>
+          <div class="col-md-6 text-right" style="padding-right: 0"><%= link_to Spree.t(:forgot_password), spree.recover_password_path %></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit Spree.t(:login), :class => 'btn btn-sgcb col-md-12 col-xs-12', :tabindex => 4 %>
+      </div>
+
+      <div class="form-group" style="margin-top: 60px;font-size: 16px">
+        <%= link_to Spree.t(:registration), spree.signup_path, class: "btn btn-detail col-md-12 col-xs-12" %>
+      </div>
     </div>
 
-    <div class="form-group"><%= f.submit Spree.t(:login), :class => 'btn btn-sgcb col-md-12 col-xs-12', :tabindex => 4 %></div>
 <% end %>
