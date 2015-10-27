@@ -26,3 +26,7 @@ zh-CN:
     please_confirm_your_email: "请确认邮箱地址"
     sign_in_with: "用%{provider}账户登录"
     you_have_signed_in_with_these_services: "您曾通过下列账户登录"
+    authentication_method:
+      qq: QQ
+      wechat: 微信
+      weibo: 微博
