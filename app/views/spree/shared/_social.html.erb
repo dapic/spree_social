@@ -5,7 +5,7 @@
         <div class="col-md-6 col-xs-6" style="padding-top: 10px; padding-bottom: 5px;"><%= Spree.t(:sign_in_through_one_of_these_services) %>:</div>
 
         <% Spree::AuthenticationMethod.available_for(@spree_user).each do |method| %>
-            <div class="col-md-2 col-xs-2" style="padding-left: 1px;padding-right: 1px;transform: translateY(50%);-webkit-transform: translateY(-50%);-ms-transform: translateY(-50%);">
+            <div class="col-md-2 col-xs-2" style="padding-left: 1px;padding-right: 1px;padding-top: 10px;">
               <%= link_to(image_tag("#{method.provider}_icon_32x32.png", size: "16x16") + " #{Spree.t("authentication_method.#{method.provider}")}",
                           spree.spree_user_omniauth_authorize_url(provider: method.provider),
                           id: method.provider.to_url,
