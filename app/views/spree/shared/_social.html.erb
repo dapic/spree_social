@@ -1,17 +1,24 @@
 <div class="clearfix"></div>
-<div class="row section-content-sgcb social-section">
-  <div id="social-signin-links">
-    <% if (!spree_current_user || !spree_current_user.user_authentications) && Spree::AuthenticationMethod.active_authentication_methods? %>
-        <div class="col-md-6 col-xs-6" style="padding-top: 10px; padding-bottom: 5px;"><%= Spree.t(:sign_in_through_one_of_these_services) %>:</div>
 
-        <% Spree::AuthenticationMethod.available_for(@spree_user).each do |method| %>
-            <div class="col-md-2 col-xs-2" style="padding-left: 1px;padding-right: 1px;padding-top: 10px;">
-              <%= link_to(image_tag("#{method.provider}_icon_32x32.png", size: "16x16") + " #{Spree.t("authentication_method.#{method.provider}")}",
-                          spree.spree_user_omniauth_authorize_url(provider: method.provider),
-                          id: method.provider.to_url,
-                          title: Spree.t(:sign_in_with, provider: method.provider)) if method.active %>
-            </div>
-        <% end %>
-    <% end %>
-  </div>
-</div>
+<% if (!spree_current_user || !spree_current_user.user_authentications) && Spree::AuthenticationMethod.active_authentication_methods? %>
+    <div class="section-content-sgcb social-section">
+      <div id="social-signin-links">
+        <div class="row">
+          <div class="col-md-12" style="padding-top: 10px; padding-bottom: 5px;"><%= Spree.t(:sign_in_through_one_of_these_services) %>
+            :
+          </div>
+        </div>
+        <div class="row">
+          <% Spree::AuthenticationMethod.available_for(@spree_user).each do |method| %>
+              <div class="col-md-4 col-xs-4 text-center" style="padding-left: 1px;padding-right: 1px;padding-top: 5px;padding-bottom: 10px;">
+                <%= link_to(image_tag("#{method.provider}_icon_32x32.png", size: "16x16") + " #{Spree.t("authentication_method.#{method.provider}")}",
+                            spree.spree_user_omniauth_authorize_url(provider: method.provider),
+                            id: method.provider.to_url,
+                            title: Spree.t(:sign_in_with, provider: method.provider)) if method.active %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
