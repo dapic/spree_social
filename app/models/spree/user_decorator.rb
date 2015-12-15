@@ -12,6 +12,10 @@ Spree.user_class.class_eval do
     self.login ||= omniauth['info']['nickname']
   end
 
+  def update_login(omniauth)
+    self.login = omniauth['info']['nickname'] || self.login
+  end
+
   def password_required?
     (user_authentications.empty? || !password.blank?) && super
   end
