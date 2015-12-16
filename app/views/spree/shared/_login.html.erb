@@ -26,5 +26,6 @@
         <%= link_to Spree.t(:registration), spree.signup_path, class: "btn btn-detail col-md-12 col-xs-12" %>
       </div>
     </div>
-
+    <%= hidden_field_tag "return_url", request.env["HTTP_REFERER"] %>
+    <%= hidden_field_tag "mode", params['mode'] %>
 <% end %>
