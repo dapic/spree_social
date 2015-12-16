@@ -9,7 +9,6 @@ Spree::UserRegistrationsController.class_eval do
   end
 
   def oauth_binding
-    binding.pry
     self.resource = resource_class.confirm_by_sms_token(params[:sms_token])
     # self.resource = resource_class.find 1003
     # self.resource = spree_current_user
