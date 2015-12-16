@@ -1,0 +1,24 @@
+<% @body_id = 'signup' %>
+<%= render :partial => 'spree/shared/error_messages', :locals => {:target => @spree_user} %>
+
+<div id="mainbody">
+  <p></p>
+  <div class="row">
+    <div class="col-md-4"></div>
+
+    <div id="new-customer" class="col-md-4">
+      <div id="signup_method_tabs" class="no-radius" data-hook="signup">
+        <h3>只差一步，即可完成登录设置</h3>
+        <div>快速完成时光彩贝账号创建</div>
+        <div>账号创建后，即可直接登录时光彩贝</div>
+        <%= render :partial => 'spree/shared/phone_signup_form', :locals => {:resource => resource, :form_action_url => oauth_binding_path(), :sms_sending_path => api_phone_token_path() } %>
+
+        <%= javascript_include_tag 'spree/frontend/register', 'data-turbolinks-track' => true %>
+        <div class="text-right"><%= link_to spree.root_path %>
+        <p></p>
+
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
