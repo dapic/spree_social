@@ -14,7 +14,7 @@
         <%= render :partial => 'spree/shared/phone_signup_form', :locals => {:resource => resource, :form_action_url => oauth_binding_path(), :sms_sending_path => api_phone_token_path() } %>
 
         <%= javascript_include_tag 'spree/frontend/register', 'data-turbolinks-track' => true %>
-        <div class="text-right"><%= link_to '以后再说', spree.root_path %>
+        <div class="text-right"><%= link_to '以后再说', spree.root_path , :id=>"jump" %>
         <p></p>
 
       </div>
@@ -22,3 +22,6 @@
     <div class="col-md-4"></div>
   </div>
 </div>
+</div>
+
+<%= hidden_field_tag "return_url", request.env["HTTP_REFERER"] %>
