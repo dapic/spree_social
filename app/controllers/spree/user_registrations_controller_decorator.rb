@@ -20,7 +20,10 @@ Spree::UserRegistrationsController.class_eval do
         # associate_user
         # respond_with resource, location: after_sign_up_path_for(resource)
         # sign_up(:spree_user, resource)
-        store_location_for(:spree_user,cookies["return_url"])
+        if (cookies[:mode]=="1" && !cookies["return_url"].to_s.include?("/signup"))
+          store_location_for(:spree_user,cookies["return_url"])
+        end
+
         sign_in_and_redirect :spree_user, resource, event: :authentication, bypass: true
 
       end
