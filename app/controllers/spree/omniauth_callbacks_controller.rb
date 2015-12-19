@@ -22,7 +22,13 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             # user_login.register
             authentication.user.update_login(auth_hash)
             flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: auth_hash['provider'])
-            store_location_for(:spree_user, oauth_connect_url) unless authentication.user.phone
+            if authentication.user.phone
+                if (cookies[:mode]=="1" && !cookies["return_url"].to_s.include?("/signup"))
+                  store_location_for(:spree_user,cookies["return_url"])
+                end
+            else
+              store_location_for(:spree_user, oauth_connect_url)
+            end
             sign_in_and_redirect :spree_user, authentication.user
           # 已有一个登录了的spree账户，现在用omniauth登录，则关联这两个账户。这种情况目前（2015-10-31）其实不存在。
           elsif spree_current_user
